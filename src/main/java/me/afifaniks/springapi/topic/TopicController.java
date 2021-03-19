@@ -3,8 +3,10 @@ package me.afifaniks.springapi.topic;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class TopicController {
@@ -20,10 +22,10 @@ public class TopicController {
 
     @RequestMapping("/topics/{id}")
     public Object getTopic(@PathVariable String id) {
-        Topic topic = topicService.getTopic(id);
+        Optional<Topic> topic = topicService.getTopic(id);
 
-        if (topic == null) {
-            return "No such element";
+        if (!topic.isPresent()) {
+            return new ArrayList<Topic>();
         }
         return topic;
     }
